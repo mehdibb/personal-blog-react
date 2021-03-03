@@ -8,6 +8,9 @@ import {
   Nav,
 } from 'react-bootstrap';
 import { Access, AccessContext, AccessType } from '../../lib/utilities';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Home from '../home';
+
 
 export default function App(): React.ReactElement {
   const [accessType, setAccessType] = useState<AccessType>(AccessType.User);
@@ -45,6 +48,22 @@ export default function App(): React.ReactElement {
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
+            <Router>
+                    <Switch>
+                        <Route exact path='/'>
+                            <Home />
+                        </Route>
+                        <Route path='/home'>
+                          <Home />
+                        </Route>
+                        {/* <Route path='/posts/:id'>
+                            <PostPage />
+                        </Route> */}
+                        <Route>
+                            <p>404 Not Found</p>
+                        </Route>
+                    </Switch>
+            </Router>
           </Container>
         </div>
       </AccessContext.Provider>

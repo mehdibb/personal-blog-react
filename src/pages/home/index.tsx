@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Button, Col, Form, Row,
 } from 'react-bootstrap';
@@ -10,16 +10,22 @@ import {
   Categories, EditableText, IconButton, TagsGroup,
 } from '../../lib/components';
 
-interface Props {
-  author: Author;
-}
 
 const latestPosts = [
   { id: 'id1', text: 'This is the text for first post' },
   { id: 'id2', text: 'And this one is for the second post' },
 ];
 
-export default function Home({ author }: Props): React.ReactElement {
+export default function Home(): React.ReactElement {
+  const [author, setAuthor] = useState<Author | undefined>();
+
+  useEffect(() => {
+    async function fetchAuthor(): Promise<void> {
+      setAuthor(await getAuthor());
+    }
+    fetchAuthor();
+  }, []);
+  
   const [
     authorShortDescription,
     setAuthorShortDescription,
@@ -52,22 +58,26 @@ export default function Home({ author }: Props): React.ReactElement {
         <Col sm="9">Posts</Col>
         <Col sm="3" className="px-4">
           <Row>
-            <img
+            {author 
+            ? <img
               alt={author.picture.description}
               src={author.picture.url}
               className="mb-3"
               style={{ width: '100%', height: 'auto' }}
             />
+          : null}
           </Row>
           <Row><h4>About Me</h4></Row>
           <Row className="mb-3">
-            <EditableText onSubmit={handleSubmitDescription}>
-              {authorShortDescription == null ? author.shortDescription : authorShortDescription}
-            </EditableText>
+            {author
+              ? <EditableText onSubmit={handleSubmitDescription}>
+                {authorShortDescription == null ? author.shortDescription : authorShortDescription}
+              </EditableText>
+              : null}
           </Row>
           <Row className="mb-2"><h4>Follow Me</h4></Row>
           <Row className="mb-5">
-            {author.socialLinks.map(({ link, title, type }) => (
+            {author?.socialLinks.map(({ link, title, type }) => (
               // eslint-disable-next-line jsx-a11y/control-has-associated-label
               <a href={link} target="_blank" rel="noreferrer" key={title}><IconButton Icon={iconsMap(type)} title={title} /></a>
             ))}
@@ -130,15 +140,3 @@ export default function Home({ author }: Props): React.ReactElement {
     </>
   );
 }
-
-// export async function getServerSideProps(): Promise<
-// GetServerSidePropsResult<{author: Author}>
-// > {
-//   const author = await getAuthor();
-
-//   return {
-//     props: {
-//       author,
-//     },
-//   };
-// }
