@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Button, Col, Form, Row,
+  Col, Form, Row,
 } from 'react-bootstrap';
 import {
   getAuthor, Author, iconsMap, updateAuthorField,
 } from '../../lib/utilities';
-import styles from './index.module.scss';
 import {
   Categories, EditableText, IconButton, TagsGroup,
 } from '../../lib/components';
+import { SearchBar, SearchBarButton, SearchBarWrapper, StyledForm } from './styles';
 
 
 const latestPosts = [
@@ -85,15 +85,15 @@ export default function Home(): React.ReactElement {
           <Row><h4>Twitter</h4></Row>
           <Row><p>coming soon...</p></Row>
           <Row className="mb-4">
-            <Form className={styles.form}>
+            <StyledForm>
               <Form.Group controlId="aboutMe.search">
                 <Form.Label />
-                <div className={styles.search_bar_wrapper}>
-                  <Form.Control placeholder="Search site..." className={styles.search_bar} />
-                  <Button className={styles.search_bar_button}>GO</Button>
-                </div>
+                <SearchBarWrapper>
+                  <SearchBar placeholder="Search site..."/>
+                  <SearchBarButton>GO</SearchBarButton>
+                </SearchBarWrapper>
               </Form.Group>
-            </Form>
+            </StyledForm>
           </Row>
           <Row className="mb-2"><h4>Tags</h4></Row>
           <Row className="mb-4">

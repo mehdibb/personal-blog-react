@@ -2,7 +2,6 @@ import { createClient, Entry } from 'contentful';
 import { createClient as createManagementClient } from 'contentful-management';
 import { EntryProps } from 'contentful-management/types';
 
-console.log(process.env.REACT_APP_CONTENTFUL_ACCESS_TOKEN)
 
 const client = createClient({
   accessToken: process.env.REACT_APP_CONTENTFUL_ACCESS_TOKEN as string,

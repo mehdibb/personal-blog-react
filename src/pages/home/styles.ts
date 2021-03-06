@@ -1,45 +1,45 @@
-.author_description {
-  line-height: 1.2;
-}
+import styled from '@emotion/styled';
+import { Button, Form } from 'react-bootstrap';
 
-.search_bar {
+
+export const SearchBar = styled(Form.Control)`
   border: unset;
   width: calc(100% - 42px);
   border-radius: unset;
 
-  &:focus {
+  :focus {
     box-shadow: none;
   }
-}
+`;
 
-.search_bar_button {
+export const SearchBarButton = styled(Button)`
   background-color: #ffffff;
   border: unset;
   border-radius: 0;
   color: inherit;
 
-  &:hover {
+  :hover {
     background-color: #ffffff;
     color: inherit;
   }
 
-  &:focus {
+  :focus {
     background-color: #ffffff;
     color: inherit;
     box-shadow: none;
   }
 
-  &:active {
+  :active {
     background-color: #ffffff !important;
     border-color: unset !important;
     color: inherit !important;
   }
-}
+`;
 
-.search_bar_wrapper {
-  display: flex;
-}
+export const SearchBarWrapper = styled.div`
+    display: flex;
+`;
 
-.form {
+export const StyledForm = styled(Form)`
   width: 100%;
-}
+`;
