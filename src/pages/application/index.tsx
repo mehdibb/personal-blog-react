@@ -10,6 +10,7 @@ import {
 import { Access, AccessContext, AccessType } from '../../lib/utilities';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from '../home';
+import Resume from '../resume';
 
 
 export default function App(): React.ReactElement {
@@ -55,6 +56,9 @@ export default function App(): React.ReactElement {
                         </Route>
                         <Route path='/home'>
                           <Home />
+                        </Route>
+                        <Route path='/resume'>
+                          <Resume />
                         </Route>
                         {/* <Route path='/posts/:id'>
                             <PostPage />
