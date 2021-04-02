@@ -2,10 +2,37 @@ import styled from '@emotion/styled';
 import { Col, Container, Row } from 'react-bootstrap';
 
 
+export const Description = styled(Col)`
+
+`;
+
+export const Percentage = styled(Col)<{value: number}>`
+  background-color: #ddd;
+  height: 10px;
+  position: relative;
+
+  ::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: " ";
+    width: ${({value}): string => `${value}%`};
+    height: 100%;
+    background-color: var(--gray-dark);
+  }
+`;
+
+export const StyledSkill = styled(Row)`
+  font-size: 18px;
+`;
+
+export const StyledExperience = styled(Row)`
+  
+`;
+
 export const Name = styled(Row)`
 
   h1 {
-    font-size: 72px;
     letter-spacing: 0.2px;
 
     b {
@@ -22,7 +49,8 @@ export const Info = styled(Row)`
   font-size: 18px;
 
   a {
-    color: white;
+    color: var(--white);
+    word-break: break-all;
   }
 
   b {
@@ -31,12 +59,20 @@ export const Info = styled(Row)`
 `;
 
 export const TopSection = styled(Col)`
-  /* TODO: read from theme */
-  background-color: #373d48;
-  color: #fff;
+  background-color: var(--gray-dark);
+  color: var(--white);
+`;
+
+export const Content = styled(Col)`
+  h3 {
+    font-weight: 600;
+    color: var(--gray-dark)
+  }
 `;
 
 export const StyledResume = styled(Container)`
+  background-color: var(--white);
+
   * {
     font-family: 'Almarai', sans-serif;
     font-weight: 300;
