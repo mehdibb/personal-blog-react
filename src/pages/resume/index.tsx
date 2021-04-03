@@ -139,7 +139,7 @@ function SkillComponent({title, proficiency} : SkillProps): React.ReactElement {
   }, [proficiency])
   
   return (
-    <StyledSkill className="d-flex ml-5">
+    <StyledSkill className="d-flex ml-5 mb-2">
       <Col >{title}</Col>
       <Col className="col-3">
         <Row className="mr-0"><Percentage value={proficiency} /></Row>
@@ -231,18 +231,18 @@ function Resume({className}: Props): React.ReactElement {
             my favorite experiences.
           </Col>
         </Row>
-        <h3 className="border-bottom mt-3">Skills</h3>
+        <h3 className="border-bottom border-dark mt-3">Skills</h3>
         {SKILLS.map(({proficiency, title}, index) => <SkillComponent
           proficiency={proficiency}
           title={title}
           key={index}
           />)}
-        <h3 className="border-bottom mt-3">Work History</h3>
+        <h3 className="border-bottom border-dark mt-3">Work History</h3>
         {WORK_HISTORY.map((historyItem, index) => <ExperienceComponent
           item={historyItem}
           key={index}
           />)}
-        <h3 className="border-bottom mt-3">Education</h3>
+        <h3 className="border-bottom border-dark mt-3">Education</h3>
         {EDUCATION_HISTORY.map((historyItem, index) => <ExperienceComponent
           item={historyItem}
           key={index}

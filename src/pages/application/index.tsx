@@ -8,7 +8,7 @@ import {
   Nav,
 } from 'react-bootstrap';
 import { Access, AccessContext, AccessType } from '../../lib/utilities';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import Home from '../home';
 import Resume from '../resume';
 
@@ -43,8 +43,9 @@ export default function App(): React.ReactElement {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                  <Nav.Link href="#home">Home</Nav.Link>
+                  <Nav.Link href="/">Home</Nav.Link>
                   <Nav.Link href="#link">Link</Nav.Link>
+                  <Nav.Link href="/resume">Resume</Nav.Link>
                   <Nav.Link onClick={handleAccessButtonClick}>{accessContext.type === AccessType.Admin ? 'User' : 'Admin'}</Nav.Link>
                 </Nav>
               </Navbar.Collapse>
@@ -55,7 +56,7 @@ export default function App(): React.ReactElement {
                             <Home />
                         </Route>
                         <Route path='/home'>
-                          <Home />
+                          <Redirect to="/" />
                         </Route>
                         <Route path='/resume'>
                           <Resume />

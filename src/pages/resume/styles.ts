@@ -7,7 +7,7 @@ export const Description = styled(Col)`
 `;
 
 export const Percentage = styled(Col)<{value: number}>`
-  background-color: #ddd;
+  background-color: var(--white);
   height: 10px;
   position: relative;
 
@@ -71,7 +71,7 @@ export const Content = styled(Col)`
 `;
 
 export const StyledResume = styled(Container)`
-  background-color: var(--white);
+  background-color: var(--gray-light);
 
   * {
     font-family: 'Almarai', sans-serif;
