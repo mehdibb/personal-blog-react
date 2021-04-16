@@ -13,24 +13,24 @@ export const SearchBar = styled(Form.Control)`
 `;
 
 export const SearchBarButton = styled(Button)`
-  background-color: #ffffff;
+  background-color: var(--white);
   border: unset;
   border-radius: 0;
   color: inherit;
 
   :hover {
-    background-color: #ffffff;
+    background-color: var(--white);
     color: inherit;
   }
 
   :focus {
-    background-color: #ffffff;
+    background-color: var(--white);
     color: inherit;
     box-shadow: none;
   }
 
   :active {
-    background-color: #ffffff !important;
+    background-color: var(--white) !important;
     border-color: unset !important;
     color: inherit !important;
   }

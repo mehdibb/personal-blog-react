@@ -1,0 +1,9 @@
+overwrite: true
+schema:
+  - https://graphql.contentful.com/content/v1/spaces/${REACT_APP_CONTENTFUL_SPACE_TOKEN}:
+      headers:
+        Authorization: "Bearer ${REACT_APP_CONTENTFUL_ACCESS_TOKEN}"
+generates:
+  src/schema.ts:
+    plugins:
+      - typescript

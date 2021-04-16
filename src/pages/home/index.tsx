@@ -1,46 +1,65 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import {
   Col, Form, Row,
 } from 'react-bootstrap';
 import {
-  getAuthor, Author, iconsMap, updateAuthorField,
+  iconsMap, SocialLink,
 } from '../../lib/utilities';
 import {
-  Categories, EditableText, IconButton, TagsGroup,
+  Categories, IconButton, TagsGroup, Post
 } from '../../lib/components';
 import { SearchBar, SearchBarButton, SearchBarWrapper, StyledForm } from './styles';
+import { gql, useQuery } from '@apollo/client';
+import { Post as PostType, Query } from '../../schema';
+import { Loading } from '../../lib/assets/images';
 
 
+const QUERY = gql`
+  {
+  authorProfile (id: "4H2AcYu3t9QLf6R28hS833") {
+    fullName
+    shortDescription
+    picture {
+      title
+      description
+      contentType
+      fileName
+      size
+      url
+      width
+      height
+    }
+    socialLinks
+  }
+  postCollection (limit: 10) {
+    items {
+      createdAt
+      image {
+        title
+        url
+      }
+      body
+      tags
+      title
+      sys {
+        id
+      }
+    }
+  }
+}
+`;
+
+// TODO: read from the api
 const latestPosts = [
   { id: 'id1', text: 'This is the text for first post' },
   { id: 'id2', text: 'And this one is for the second post' },
 ];
 
 export default function Home(): React.ReactElement {
-  const [author, setAuthor] = useState<Author | undefined>();
-
-  useEffect(() => {
-    async function fetchAuthor(): Promise<void> {
-      setAuthor(await getAuthor());
-    }
-    fetchAuthor();
-  }, []);
+  const {data, loading} = useQuery<Query>(QUERY);
   
-  const [
-    authorShortDescription,
-    setAuthorShortDescription,
-  ] = useState<string | undefined>(undefined);
-
-  const handleSubmitDescription = useCallback(async (value: string): Promise<void> => {
-    const response = await updateAuthorField('shortDescription', value);
-
-    if (!response) {
-      return;
-    }
-    
-    setAuthorShortDescription(response.fields.shortDescription['en-US']);
-  }, []);
-
+  console.log(data?.postCollection?.items)
+  
   return (
     <>
       <Row>
@@ -55,33 +74,54 @@ export default function Home(): React.ReactElement {
         </Col>
       </Row>
       <Row>
-        <Col sm="9">Posts</Col>
+        <Col sm="9">
+          {data?.postCollection?.items && !loading
+            ? (data?.postCollection.items as PostType[]).map(({
+              sys: {id},
+              title,
+              image,
+              body,
+              tags,
+              createdAt,
+            }) => (
+              <Post
+                key={id}
+                title={title as string}
+                image={image as {title: string; url: string}}
+                body={body as string}
+                tags={tags as string}
+                createdAt={createdAt as string}
+                />
+              ))
+            : <Loading />}
+        </Col>
         <Col sm="3" className="px-4">
           <Row>
-            {author 
+            {data?.authorProfile?.picture?.title && data.authorProfile.picture.url && !loading
+            // eslint-disable-next-line jsx-a11y/img-redundant-alt
             ? <img
-              alt={author.picture.description}
-              src={author.picture.url}
+              alt={data.authorProfile.picture?.title}
+              src={data.authorProfile.picture?.url}
               className="mb-3"
               style={{ width: '100%', height: 'auto' }}
             />
-          : null}
+          : <Loading />}
           </Row>
           <Row><h4>About Me</h4></Row>
           <Row className="mb-3">
-            {author
-              ? <EditableText onSubmit={handleSubmitDescription}>
-                {authorShortDescription == null ? author.shortDescription : authorShortDescription}
-              </EditableText>
-              : null}
+            {loading ? <Loading /> : data?.authorProfile?.shortDescription}
           </Row>
           <Row className="mb-2"><h4>Follow Me</h4></Row>
-          <Row className="mb-5">
-            {author?.socialLinks.map(({ link, title, type }) => (
-              // eslint-disable-next-line jsx-a11y/control-has-associated-label
-              <a href={link} target="_blank" rel="noreferrer" key={title}><IconButton Icon={iconsMap(type)} title={title} /></a>
-            ))}
-          </Row>
+          {(data?.authorProfile?.socialLinks as SocialLink[] | undefined) &&
+          (data?.authorProfile?.socialLinks as SocialLink[]).length  > 0 &&
+          !loading
+            ? <Row className="mb-5">
+              {(data?.authorProfile?.socialLinks as SocialLink[])?.map(({ link, title, type }) => (
+                // eslint-disable-next-line jsx-a11y/control-has-associated-label
+                <a href={link} target="_blank" rel="noreferrer" key={title}><IconButton Icon={iconsMap(type)} title={title} /></a>
+              ))}
+            </Row>
+            : null}
           <Row><h4>Twitter</h4></Row>
           <Row><p>coming soon...</p></Row>
           <Row className="mb-4">

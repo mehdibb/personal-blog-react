@@ -13,7 +13,7 @@ const managementClient = createManagementClient({
 });
 
 export interface SocialLink {
-  type: 'instagram' | 'twitter' | 'facebook';
+  type: 'instagram' | 'twitter' | 'linkedin';
   title: string;
   link: string;
 }

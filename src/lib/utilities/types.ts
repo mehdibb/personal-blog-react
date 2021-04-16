@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter } from '../assets/images';
+import { Instagram, Linkedin, Twitter } from '../assets/images';
 import { SocialLink } from '.';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -12,8 +12,8 @@ export function iconsMap(type: SocialLink['type']): React.FunctionComponent {
   switch (type) {
     case 'twitter':
       return Twitter;
-    case 'facebook':
-      return Facebook;
+    case 'linkedin':
+      return Linkedin;
     case 'instagram':
       return Instagram;
     default:

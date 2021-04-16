@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.3.13",
+    "@emotion/babel-plugin": "^11.3.0",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "@testing-library/jest-dom": "^5.11.4",
@@ -15,6 +17,7 @@
     "bootstrap": "^4.6.0",
     "contentful": "^8.1.8",
     "contentful-management": "^7.8.0",
+    "graphql": "^15.5.0",
     "normalize.css": "^8.0.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.1",
@@ -28,11 +31,12 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "gen": "REACT_APP_CONTENTFUL_SPACE_TOKEN=$(grep REACT_APP_CONTENTFUL_SPACE_TOKEN .env.local | cut -d '=' -f2) REACT_APP_CONTENTFUL_ACCESS_TOKEN=$(grep REACT_APP_CONTENTFUL_ACCESS_TOKEN .env.local | cut -d '=' -f2) graphql-codegen --config codegen.yml",
+    "start": "yarn gen && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-typescript": "tsc --build"
+    "build-typescript": "yarn gen && tsc --build"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +57,8 @@
     ]
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.3",
+    "@graphql-codegen/typescript": "^1.21.1",
     "@types/react-router-dom": "^5.1.7"
   }
 }
